@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirect to Now.gg</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        button {
+            font-size: 20px;
+            padding: 10px 20px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="redirect()">Go to Now.gg</button>
+
+    <script>
+        function redirect() {
+            const newWindow = window.open("https://now.gg", "_blank", "noopener,noreferrer");
+            if (!newWindow) {
+                alert("Popup blocked! Please allow popups and try again.");
+            }
+        }
+    </script>
+</body>
+</html>
