@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirect to Now.gg</title>
+    <title>Now.gg Redirect Protection</title>
     <style>
         body {
             display: flex;
@@ -11,6 +11,7 @@
             align-items: center;
             height: 100vh;
             background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
         }
         button {
             font-size: 20px;
@@ -27,6 +28,7 @@
     </style>
 </head>
 <body>
+
     <button onclick="redirect()">Go to Now.gg</button>
 
     <script>
@@ -36,6 +38,34 @@
                 alert("Popup blocked! Please allow popups and try again.");
             }
         }
+
+        // Prevent redirects caused by extensions
+        setInterval(() => {
+            if (!window.location.href.includes("now.gg")) {
+                console.log("Redirect attempt detected. Returning to now.gg.");
+                window.location.href = "https://now.gg";
+            }
+        }, 1000);
+
+        // Prevent extension-injected scripts from modifying the page
+        const blockScripts = () => {
+            let scripts = document.querySelectorAll("script");
+            scripts.forEach((script) => {
+                if (!script.src.includes("now.gg")) {
+                    console.log("Blocked an external script:", script.src);
+                    script.remove();
+                }
+            });
+        };
+        setInterval(blockScripts, 1000);
+
+        // Warn user before they leave the page (to catch forced redirects)
+        window.addEventListener("beforeunload", (event) => {
+            event.preventDefault();
+            event.returnValue = "Are you sure you want to leave? Extensions may be interfering!";
+        });
+
     </script>
+
 </body>
 </html>
